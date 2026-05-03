@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Happy Birthday Vennela</title>
+
+<!-- Social Media Previews (OG Tags) -->
+<meta property="og:title" content="Happy Birthday to You">
+<meta property="og:description" content="A magical birthday surprise with glowing seeds and moonlight.">
+<meta property="og:image" content="image.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Happy Birthday to You">
+<meta name="twitter:image" content="image.png">
+
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --primary-glow: rgba(255, 255, 255, 0.8);
+    --bg-color: #050505;
+    --moon-glow: rgba(255, 255, 240, 0.15);
+  }
+
+  body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: var(--bg-color);
+    background: radial-gradient(circle at center, #1a1a2e 0%, #050505 100%);
+    font-family: "Montserrat", sans-serif;
+    color: white;
+    touch-action: none; /* Prevents scrolling/bouncing on mobile */
+  }
+
+  /* The Moon Background */
+  .moon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(85vw, 450px);
+    height: min(85vw, 450px);
+    background: radial-gradient(circle, #fff 0%, #fdfdfd 20%, rgba(255,255,255,0) 70%);
+    border-radius: 50%;
+    filter: blur(8px);
+    opacity: 0.22;
+    box-shadow: 0 0 80px 10px var(--moon-glow);
+    z-index: 1;
+    animation: pulseMoon 8s infinite ease-in-out;
+  }
+
+  @keyframes pulseMoon {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.18; }
+    50% { transform: translate(-50%, -50%) scale(1.08); opacity: 0.28; }
+  }
+
+  /* Main UI Overlay */
+  .container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    text-align: center;
+    opacity: 0;
+    transition: all 2s cubic-bezier(0.2, 1, 0.3, 1);
+    z-index: 100;
+    pointer-events: none;
+    width: 95%;
+    max-width: 600px;
+  }
+
+  .container.show {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+    pointer-events: all;
+  }
+
+  h1 {
+    font-family: "Great Vibes", cursive;
+    font-size: clamp(3rem, 15vw, 7rem);
+    margin: 0;
+    text-shadow: 0 0 30px rgba(255,255,255,0.4);
+    letter-spacing: 1px;
+    line-height: 1.2;
+  }
+
+  p {
+    font-weight: 300;
+    letter-spacing: clamp(3px, 1.5vw, 6px);
+    text-transform: uppercase;
+    font-size: clamp(0.65rem, 2.5vw, 0.85rem);
+    margin-bottom: 5px;
+    opacity: 0.8;
+  }
+
+  .btn {
+    margin-top: clamp(20px, 5vh, 40px);
+    padding: 14px 36px;
+    border-radius: 50px;
+    border: 1px solid rgba(255,255,255,0.4);
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: white;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: clamp(0.75rem, 3vw, 0.95rem);
+    cursor: pointer;
+    transition: all 0.4s;
+    outline: none;
+    position: relative;
+    z-index: 102;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .btn:hover, .btn:active {
+    background: white;
+    color: black;
+    box-shadow: 0 0 40px rgba(255,255,255,0.7);
+    transform: translateY(-2px) scale(1.02);
+  }
+
+  /* Seed Styles */
+  .seed {
+    position: absolute;
+    width: clamp(14px, 4vw, 22px);
+    height: clamp(14px, 4vw, 22px);
+    will-change: transform;
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  .seed svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 0 3px white);
+    opacity: 0.75;
+  }
+
+  /* Sparkles */
+  .sparkle {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.2;
+    pointer-events: none;
+  }
+
+  .footer {
+    position: absolute;
+    bottom: max(15px, env(safe-area-inset-bottom));
+    right: 20px;
+    text-align: right;
+    font-size: 8px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    opacity: 0; 
+    z-index: 101;
+    line-height: 1.6;
+    transition: opacity 2s ease;
+  }
+
+  .branding-link {
+    display: inline-block;
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 8px 0;
+    transition: opacity 0.3s;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+  }
+
+  /* Mobile Landscape adjustments */
+  @media (max-height: 500px) {
+    .container { transform: translate(-50%, -50%) scale(0.7); }
+    h1 { font-size: 3rem; }
+    .btn { margin-top: 10px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="moon"></div>
+
+<div class="container" id="main">
+  <p>Wishing a wonderful day to</p>
+  <h1>Vennela</h1>
+  <button class="btn" id="magicBtn" onclick="toggleMusic(event)">🎵 Activate Magic</button>
+</div>
+
+<div class="footer" id="branding">
+  <a href="https://weddinginvitation.store" target="_blank" class="branding-link">
+    Created by weddingInvitation.store
+  </a>
+</div>
+
+<script>
+/**
+ * PARTICLE SYSTEM FOR SEEDS
+ */
+let canvasWidth = window.innerWidth;
+let canvasHeight = window.innerHeight;
+const IS_MOBILE = canvasWidth < 768;
+
+const INITIAL_SEED_COUNT = IS_MOBILE ? 150 : 320; 
+const REPEL_RADIUS = IS_MOBILE ? 90 : 160;
+const REPEL_STRENGTH = 1.4;
+const FRICTION = 0.965;
+const seeds = [];
+const mouse = { x: -2000, y: -2000 };
+
+// Audio element
+let birthdaySong;
+
+function toggleMusic(e) {
+  // Trigger Burst Effect from button
+  const rect = e.target.getBoundingClientRect();
+  const centerX = rect.left + rect.width / 2;
+  const centerY = rect.top + rect.height / 2;
+  
+  // Higher burst count for button click
+  const burstCount = IS_MOBILE ? 40 : 80;
+  for(let i=0; i<burstCount; i++) {
+    seeds.push(new Seed(true, centerX, centerY));
+  }
+
+  // Handle song.mp3 playback
+  if (!birthdaySong) {
+    birthdaySong = new Audio('song.mp3');
+    birthdaySong.loop = true;
+    birthdaySong.play().catch(err => {
+      console.log("Music playback failed. Make sure 'song.mp3' is in the same folder.", err);
+    });
+    e.target.innerText = "⏸ Pause Magic";
+  } else {
+    if (birthdaySong.paused) {
+      birthdaySong.play();
+      e.target.innerText = "⏸ Pause Magic";
+    } else {
+      birthdaySong.pause();
+      e.target.innerText = "🎵 Activate Magic";
+    }
+  }
+}
+
+// Track mouse/touch
+const updatePointer = (e) => {
+  const x = e.clientX || (e.touches && e.touches[0].clientX);
+  const y = e.clientY || (e.touches && e.touches[0].clientY);
+  if (x !== undefined) {
+    mouse.x = x;
+    mouse.y = y;
+  }
+};
+window.addEventListener('mousemove', updatePointer);
+window.addEventListener('touchstart', updatePointer, {passive: true});
+window.addEventListener('touchmove', updatePointer, {passive: true});
+
+class Seed {
+  constructor(isInitialBurst = false, startX, startY) {
+    this.el = document.createElement('div');
+    this.el.className = 'seed';
+    this.el.innerHTML = `
+      <svg viewBox="0 0 24 24">
+        <line x1="12" y1="12" x2="12" y2="22" stroke="white" stroke-width="1"/>
+        <g stroke="white" stroke-width="1.2">
+          <line x1="12" y1="8" x2="4" y2="12"/><line x1="12" y1="8" x2="20" y2="12"/>
+          <line x1="12" y1="8" x2="8" y2="4"/><line x1="12" y1="8" x2="16" y2="4"/>
+          <circle cx="12" cy="8" r="1.5" fill="white"/>
+        </g>
+      </svg>`;
+    document.body.appendChild(this.el);
+    this.reset(isInitialBurst, startX, startY);
+  }
+
+  reset(isInitialBurst, startX, startY) {
+    this.x = startX !== undefined ? startX : canvasWidth / 2;
+    this.y = startY !== undefined ? startY : canvasHeight / 2;
+    
+    const angle = Math.random() * Math.PI * 2;
+    const force = isInitialBurst ? (Math.random() * (IS_MOBILE ? 12 : 18) + 6) : (Math.random() * 1.5 + 0.5);
+    
+    this.vx = Math.cos(angle) * force;
+    this.vy = Math.sin(angle) * force;
+    
+    this.size = (IS_MOBILE ? 0.6 : 0.5) + Math.random() * 0.8;
+    this.rotation = Math.random() * 360;
+    this.rotationSpeed = (Math.random() - 0.5) * 1.5;
+    this.floatOffset = Math.random() * 100;
+  }
+
+  update() {
+    this.vx *= FRICTION;
+    this.vy *= FRICTION;
+
+    const dx = this.x - mouse.x;
+    const dy = this.y - mouse.y;
+    const distanceSq = dx * dx + dy * dy;
+    const repelRadiusSq = REPEL_RADIUS * REPEL_RADIUS;
+
+    if (distanceSq < repelRadiusSq) {
+      const distance = Math.sqrt(distanceSq);
+      const force = (REPEL_RADIUS - distance) / REPEL_RADIUS;
+      const nx = dx / distance;
+      const ny = dy / distance;
+      this.vx += nx * force * REPEL_STRENGTH;
+      this.vy += ny * force * REPEL_STRENGTH;
+    }
+
+    // Natural Drift
+    this.vx += Math.sin(Date.now() * 0.0008 + this.floatOffset) * 0.04;
+    this.vy += Math.cos(Date.now() * 0.0008 + this.floatOffset) * 0.04;
+
+    this.x += this.vx;
+    this.y += this.vy;
+    this.rotation += this.rotationSpeed + (this.vx * 0.4);
+
+    // Screen Wrap
+    const margin = 60;
+    if (this.x < -margin) this.x = canvasWidth + margin - 10;
+    if (this.x > canvasWidth + margin) this.x = -margin + 10;
+    if (this.y < -margin) this.y = canvasHeight + margin - 10;
+    if (this.y > canvasHeight + margin) this.y = -margin + 10;
+
+    this.el.style.transform = `translate3d(${this.x}px, ${this.y}px, 0) rotate(${this.rotation}deg) scale(${this.size})`;
+  }
+}
+
+function init() {
+  // Sparkles
+  const sparkleCount = IS_MOBILE ? 40 : 80;
+  for (let i = 0; i < sparkleCount; i++) {
+    const s = document.createElement('div');
+    s.className = 'sparkle';
+    s.style.left = Math.random() * 100 + '%';
+    s.style.top = Math.random() * 100 + '%';
+    s.style.opacity = Math.random() * 0.4;
+    document.body.appendChild(s);
+  }
+
+  // Seeds
+  for (let i = 0; i < INITIAL_SEED_COUNT; i++) {
+    seeds.push(new Seed(true));
+  }
+
+  requestAnimationFrame(loop);
+
+  setTimeout(() => {
+    document.getElementById('main').classList.add('show');
+  }, 1000);
+
+  setTimeout(() => {
+    const footer = document.getElementById('branding');
+    if (footer) footer.style.opacity = "0.5";
+  }, 5000);
+}
+
+function loop() {
+  for (let i = 0; i < seeds.length; i++) {
+    seeds[i].update();
+  }
+  requestAnimationFrame(loop);
+}
+
+window.onload = init;
+
+window.onresize = () => {
+  canvasWidth = window.innerWidth;
+  canvasHeight = window.innerHeight;
+};
+</script>
+</body>
+</html>
